@@ -8,7 +8,7 @@ import pandas as pd
 
 
 dataSet = pd.read_csv("synonyms.csv")
-# tesing pls work github is not letting me push anything.
+# tesing pls work github is not letting me push anything.!!!!!
 # model1 = api.load("word2vec-google-news-300")  # opens up the google-news-300 task 1 part 1
 # model2 = api.load("glove-wiki-gigaword-300")   # task 2 model 1 size -300
 # model3 = api.load("fasttext-wiki-news-subwords-300") # task 2 model 2  size -300
