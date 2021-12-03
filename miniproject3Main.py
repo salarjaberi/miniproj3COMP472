@@ -137,3 +137,30 @@ mainFunction(model4, modelName4, csvfileName4)
 modelName5 = "glove-twitter-50"
 csvfileName5 = 'glove-twitter-50.csv'
 mainFunction(model5, modelName5, csvfileName5)
+barWidth = 0.25
+fig = plt.subplots(figsize=(12, 8))
+# set height of bar
+#correct label
+Correct = [numCorrectLabel, numCorrectLabel, 1, 8, 22]
+#wrong label
+Wrong = [wrongGuesses, wrongGuesses, 16, 5, 10]
+#Accuracy label
+Accuracy = [accuracy, accuracy, 24, 25, 17]
+# Set position of bar on X axis
+br1 = np.arange(len(Correct))
+br2 = [x + barWidth for x in br1]
+br3 = [x + barWidth for x in br2]
+# Make the plot
+plt.bar(br1, Correct, color='g', width=barWidth,
+        edgecolor='grey', label='Correct')
+plt.bar(br2, Wrong, color='r', width=barWidth,
+        edgecolor='grey', label='Wrong')
+plt.bar(br3, Accuracy, color='b', width=barWidth,
+        edgecolor='grey', label='Accuracy')
+# Adding Xticks
+plt.xlabel('Models', fontweight='bold', fontsize=15)
+plt.ylabel('Models Data', fontweight='bold', fontsize=15)
+plt.xticks([r + barWidth for r in range(len(Correct))],
+           ['Model1', 'Model2', 'Model3', 'Model4', 'Model5'])
+plt.legend()
+plt.show()
