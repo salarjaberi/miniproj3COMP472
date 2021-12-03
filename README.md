@@ -12,6 +12,5 @@ We used the following models:
 ,the number of correct labels, the number of questions that the model answered without guessing(correct+wrong labels) and the accuracy.
 
 Steps to run the code:
-1- download the desired corpus using the following code: model = api.load(" your model name")".
-2- pass to the Main function the following parameters using the following code: 
-mainFunction("model, "The name of your model", <model name>-details.csv, analysis.csv)"
+**1** - There is nothing special to run our code - Simply run the code. Keep in mind that the api.load for the models will take time to run 
+**2** - Output results are shown in the output folder, if you wish to run it again it will output in the project directory 

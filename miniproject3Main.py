@@ -1,12 +1,10 @@
 import csv
 import gensim.downloader as api
-import numpy as np
 import pandas as pd
 
 # This fucntion is used to get a list of all the models in the Gsim Model - no need to keep it in the
 # functioning code - we used it to find new models for part 2
 # print(list(gensim.downloader.info()['models'].keys()))
-from matplotlib import pyplot as plt
 
 dataSet = pd.read_csv("synonyms.csv")
 model1 = api.load("word2vec-google-news-300")  # opens up the google-news-300 task 1 part 1
@@ -97,7 +95,7 @@ def mainFunction(model, modelName, csvName):
         sizeofVocab = len(model)
         header2 = ['Model Name', 'Size Of Vocab', 'Num. Correct Labels', 'Without Guessing', 'Accuracy']
         data2 = [modelName, sizeofVocab, numCorrectLabel, withoutGuessing, accuracy]
-        with open("analysis.csv", 'a', encoding='UTF8', newline='') as f2:
+        with open("Outputs/analysis.csv", 'a', encoding='UTF8', newline='') as f2:
             writer = csv.writer(f2)
             if count_A==0:
                 if modelName == "Word2vec-google-news-300":
@@ -136,4 +134,3 @@ mainFunction(model4, modelName4, csvfileName4)
 modelName5 = "glove-twitter-50"
 csvfileName5 = 'glove-twitter-50.csv'
 mainFunction(model5, modelName5, csvfileName5)
-
