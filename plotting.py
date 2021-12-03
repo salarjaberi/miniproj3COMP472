@@ -1,3 +1,8 @@
+# Written by:
+# Salar Jaberi 40024956
+# Rami  Abedalaziz 20817325
+# Faraj shahrstan 40041842
+
 import numpy as np
 import matplotlib.pyplot as plt
 barWidth = 0.15
