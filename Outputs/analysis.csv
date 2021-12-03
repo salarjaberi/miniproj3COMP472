@@ -1,0 +1,6 @@
+Model Name,Size Of Vocab,Num. Correct Labels,Without Guessing,Accuracy
+Word2vec-google-news-300,3000000,70,79,88.60759493670885
+glove-wiki-gigaword-300,400000,70,78,89.74358974358975
+fasttext-wiki-news-subwords-300,999999,73,79,92.40506329113924
+glove-twitter-25,1193514,33,69,47.82608695652174
+glove-twitter-50,1193514,35,69,50.72463768115942
