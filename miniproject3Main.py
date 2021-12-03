@@ -1,21 +1,19 @@
 import csv
 import gensim.downloader as api
+import numpy as np
 import pandas as pd
 
 # This fucntion is used to get a list of all the models in the Gsim Model - no need to keep it in the
 # functioning code - we used it to find new models for part 2
 # print(list(gensim.downloader.info()['models'].keys()))
-
+from matplotlib import pyplot as plt
 
 dataSet = pd.read_csv("synonyms.csv")
-# tesing pls work github is not letting me push anything.!!!!!
-# model1 = api.load("word2vec-google-news-300")  # opens up the google-news-300 task 1 part 1
-# model2 = api.load("glove-wiki-gigaword-300")   # task 2 model 1 size -300
-# model3 = api.load("fasttext-wiki-news-subwords-300") # task 2 model 2  size -300
+model1 = api.load("word2vec-google-news-300")  # opens up the google-news-300 task 1 part 1
+model2 = api.load("glove-wiki-gigaword-300")   # task 2 model 1 size -300
+model3 = api.load("fasttext-wiki-news-subwords-300") # task 2 model 2  size -300
 model4 = api.load("glove-twitter-25")
 model5 = api.load("glove-twitter-50")
-
-
 
 global numCorrectLabel, withoutGuessing, accuracy, wrongGuesses
 
@@ -28,6 +26,7 @@ def mainFunction(model, modelName, csvName):
     count = 0
     count_A = 0
     countx=0
+
     for i in dataSet.index:
         countx=countx+1
         guess = ""  # empty intialize
@@ -100,31 +99,31 @@ def mainFunction(model, modelName, csvName):
         data2 = [modelName, sizeofVocab, numCorrectLabel, withoutGuessing, accuracy]
         with open("analysis.csv", 'a', encoding='UTF8', newline='') as f2:
             writer = csv.writer(f2)
-            if count_A == 0:
-                writer.writerow(header2)
+            if count_A==0:
+                if modelName == "Word2vec-google-news-300":
+                    writer.writerow(header2)
                 count_A=1
             if countx==80:
                 writer.writerow(data2)  # write the csv file - only prints last one we need
-
         count = count + 1
         count_A = count_A + 1
 
     return model
 
 # ----------------------------Task 1-----------------------------------------------
-# modelName1 = "Word2vec-google-news-300"
-# csvfileName1 = 'Word2vec-google-news-300-details.csv'
-# mainFunction(model1, modelName1, csvfileName1, analysis)
+modelName1 = "Word2vec-google-news-300"
+csvfileName1 = 'Word2vec-google-news-300-details.csv'
+mainFunction(model1, modelName1, csvfileName1)
 
 # ----------------------------Task 2 Model 1 glove-wiki-gigaword-300-----------------------------------------------
-# modelName2 = "glove-wiki-gigaword-300"
-# csvfileName2 = 'glove-wiki-gigaword-300.csv'
-# mainFunction(model2, modelName2, csvfileName2, analysis)
+modelName2 = "glove-wiki-gigaword-300"
+csvfileName2 = 'glove-wiki-gigaword-300.csv'
+mainFunction(model2, modelName2, csvfileName2)
 
 # ----------------------------Task 2 Model 2 fasttext-wiki-news-subwords-300-----------------------------------------------
-# modelName3 = "fasttext-wiki-news-subwords-300"
-# csvfileName3 = 'fasttext-wiki-news-subwords-300.csv'
-# mainFunction(model3, modelName3, csvfileName3, analysis)
+modelName3 = "fasttext-wiki-news-subwords-300"
+csvfileName3 = 'fasttext-wiki-news-subwords-300.csv'
+mainFunction(model3, modelName3, csvfileName3)
 
 
 # ----------------------------Task 2 Model 3 glove-twitter-25----------------------------------------------
@@ -137,30 +136,4 @@ mainFunction(model4, modelName4, csvfileName4)
 modelName5 = "glove-twitter-50"
 csvfileName5 = 'glove-twitter-50.csv'
 mainFunction(model5, modelName5, csvfileName5)
-barWidth = 0.25
-fig = plt.subplots(figsize=(12, 8))
-# set height of bar
-#correct label
-Correct = [numCorrectLabel, numCorrectLabel, 1, 8, 22]
-#wrong label
-Wrong = [wrongGuesses, wrongGuesses, 16, 5, 10]
-#Accuracy label
-Accuracy = [accuracy, accuracy, 24, 25, 17]
-# Set position of bar on X axis
-br1 = np.arange(len(Correct))
-br2 = [x + barWidth for x in br1]
-br3 = [x + barWidth for x in br2]
-# Make the plot
-plt.bar(br1, Correct, color='g', width=barWidth,
-        edgecolor='grey', label='Correct')
-plt.bar(br2, Wrong, color='r', width=barWidth,
-        edgecolor='grey', label='Wrong')
-plt.bar(br3, Accuracy, color='b', width=barWidth,
-        edgecolor='grey', label='Accuracy')
-# Adding Xticks
-plt.xlabel('Models', fontweight='bold', fontsize=15)
-plt.ylabel('Models Data', fontweight='bold', fontsize=15)
-plt.xticks([r + barWidth for r in range(len(Correct))],
-           ['Model1', 'Model2', 'Model3', 'Model4', 'Model5'])
-plt.legend()
-plt.show()
+
