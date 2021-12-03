@@ -11,24 +11,31 @@ dataSet = pd.read_csv("synonyms.csv")
 
 # model1 = api.load("word2vec-google-news-300")  # opens up the google-news-300 task 1 part 1
 # model2 = api.load("glove-wiki-gigaword-300")   # task 2 model 1 size -300
-model3 = api.load("fasttext-wiki-news-subwords-300") # task 2 model 2  size -300
+# model3 = api.load("fasttext-wiki-news-subwords-300") # task 2 model 2  size -300
+model4 = api.load("glove-twitter-25")
+model5 = api.load("glove-twitter-50")
+
 
 
 global numCorrectLabel, withoutGuessing, accuracy, wrongGuesses
 
 
-def mainFunction(model, modelName, csvName, csvName2):
+def mainFunction(model, modelName, csvName):
     numCorrectLabel = 0
     withoutGuessing = 0
     accuracy = 0
     wrongGuesses = 0
     count = 0
+    count_A = 0
+    countx=0
     for i in dataSet.index:
+        countx=countx+1
         guess = ""  # empty intialize
         label = ""  # labels if it is a correct , guess or wrong
         # labels question and answer
         question = dataSet["question"][i]
         answer = dataSet["answer"][i]
+
         try:
             # option words from the synonym.cvs file
             w0 = dataSet["0"][i]
@@ -75,6 +82,7 @@ def mainFunction(model, modelName, csvName, csvName2):
 
         withoutGuessing = (numCorrectLabel + wrongGuesses)
         accuracy = (numCorrectLabel / withoutGuessing) * 100
+
         header = ['Question', 'Answer', 'Guess', 'Label']
         data = [question, answer, guess, label]
 
@@ -83,33 +91,49 @@ def mainFunction(model, modelName, csvName, csvName2):
             if count == 0:  # write the header count to 0 simply to get the titles once
                 writer.writerow(header)
                 count = 1
-            writer.writerow(data)  # write the data
 
+            writer.writerow(data)  # write the data
 
         # analyis.csv info
         sizeofVocab = len(model)
         header2 = ['Model Name', 'Size Of Vocab', 'Num. Correct Labels', 'Without Guessing', 'Accuracy']
         data2 = [modelName, sizeofVocab, numCorrectLabel, withoutGuessing, accuracy]
-        with open(csvName2, '+w', encoding='UTF8', newline='') as f2:
+        with open("analysis.csv", 'a', encoding='UTF8', newline='') as f2:
             writer = csv.writer(f2)
-            writer.writerow(header2)
-            writer.writerow(data2)  # write the data
+            if count_A == 0:
+                writer.writerow(header2)
+                count_A=1
+            if countx==80:
+                writer.writerow(data2)  # write the csv file - only prints last one we need
+
         count = count + 1
+        count_A = count_A + 1
 
     return model
 
-analysis="analysis"
 # ----------------------------Task 1-----------------------------------------------
 # modelName1 = "Word2vec-google-news-300"
 # csvfileName1 = 'Word2vec-google-news-300-details.csv'
 # mainFunction(model1, modelName1, csvfileName1, analysis)
 
-# ----------------------------Task 2 Model 1 glove-wiki-gigaword-30-----------------------------------------------
+# ----------------------------Task 2 Model 1 glove-wiki-gigaword-300-----------------------------------------------
 # modelName2 = "glove-wiki-gigaword-300"
 # csvfileName2 = 'glove-wiki-gigaword-300.csv'
 # mainFunction(model2, modelName2, csvfileName2, analysis)
 
 # ----------------------------Task 2 Model 2 fasttext-wiki-news-subwords-300-----------------------------------------------
-modelName3 = "fasttext-wiki-news-subwords-300"
-csvfileName3 = 'fasttext-wiki-news-subwords-300.csv'
-mainFunction(model3, modelName3, csvfileName3, analysis)
+# modelName3 = "fasttext-wiki-news-subwords-300"
+# csvfileName3 = 'fasttext-wiki-news-subwords-300.csv'
+# mainFunction(model3, modelName3, csvfileName3, analysis)
+
+
+# ----------------------------Task 2 Model 3 glove-twitter-25----------------------------------------------
+modelName4 = "glove-twitter-25"
+csvfileName4 = 'glove-twitter-25.csv'
+mainFunction(model4, modelName4, csvfileName4)
+
+
+# ----------------------------Task 2 Model 4 glove-twitter-50----------------------------------------------
+modelName5 = "glove-twitter-50"
+csvfileName5 = 'glove-twitter-50.csv'
+mainFunction(model5, modelName5, csvfileName5)
